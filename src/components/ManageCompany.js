@@ -36,7 +36,7 @@ function ManageCompany() {
     //     return res.json();
     // }
 
-    const GET_COMPANIES_API = 'http://localhost:8084/getCompanies';
+    const GET_COMPANIES_API = 'https://ayushstockmarketspring.herokuapp.com/getCompanies';
     async function GetCompaniesApi() {
         const res = await fetch(GET_COMPANIES_API, {
             method: 'GET',
@@ -72,7 +72,7 @@ function ManageCompany() {
     const [exchangeName, setexchangeName] = useState('');
 
     async function AddCompanyApi() {
-        const res = await fetch('http://localhost:8084/addCompany', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/addCompany', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -85,7 +85,7 @@ function ManageCompany() {
     }
 
     async function StockExchangeToCompanyApi(exchange_name, company_name) {
-        const res = await fetch('http://localhost:8084/mapStockExchangeToCompany', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/mapStockExchangeToCompany', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -99,7 +99,7 @@ function ManageCompany() {
     }
 
     async function UpdateCompanyApi() {
-        const res = await fetch('http://localhost:8084/updateCompany', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/updateCompany', {
             method: 'PUT',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -112,7 +112,7 @@ function ManageCompany() {
     }
 
     async function DeleteCompanyApi(companyName) {
-        const res = await fetch(`http://localhost:8084/deleteCompanyByName/${companyName}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/deleteCompanyByName/${companyName}`, {
             method: 'DELETE',
             headers: {
                 "Access-Control-Allow-Origin": "*",

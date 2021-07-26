@@ -52,7 +52,7 @@ function ViewSector() {
     const [sectors, setSectors] = useState([]);
     const [sector, setsector] = useState({});
 
-    const GET_SECTORS_API = 'http://localhost:8084/getSectors';
+    const GET_SECTORS_API = 'https://ayushstockmarketspring.herokuapp.com/getSectors';
     async function GetSectorsApi() {
         const res = await fetch(GET_SECTORS_API, {
             method: 'GET',
@@ -74,7 +74,7 @@ function ViewSector() {
     }, [])
 
     async function SearchBySectorNameApi(sectorName) {
-        const res = await fetch(`http://localhost:8084/getSectorByName?sectorName=${sectorName}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getSectorByName?sectorName=${sectorName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -107,7 +107,7 @@ function ViewSector() {
     }
 
     async function SearchForCompaniesApi(sectorName) {
-        const res = await fetch(`http://localhost:8084/getCompaniesInSector?sectorName=${sectorName}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getCompaniesInSector?sectorName=${sectorName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",

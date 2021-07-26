@@ -5,7 +5,7 @@ const ManageImport = (props) => {
    
 
   async function AddStockpriceApi(element) {
-    const res = await fetch('http://localhost:8084/addStockPrice', {
+    const res = await fetch('https://ayushstockmarketspring.herokuapp.com/addStockPrice', {
       method: 'POST',
       headers: {
         "Access-Control-Allow-Origin": "*",

@@ -21,7 +21,7 @@ function ViewExchange() {
 
 
 
-    const GET_EXCHANGES_API = 'http://localhost:8084/getStockExchanges';
+    const GET_EXCHANGES_API = 'https://ayushstockmarketspring.herokuapp.com/getStockExchanges';
     async function GetExchangesApi() {
         const res = await fetch(GET_EXCHANGES_API, {
             method: 'GET',
@@ -43,7 +43,7 @@ function ViewExchange() {
     }, [])
 
     async function SearchForCompaniesApi(exchangeName) {
-        const res = await fetch(`http://localhost:8084/getCompanyByExchange?exchangeName=${exchangeName}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getCompanyByExchange?exchangeName=${exchangeName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",

@@ -12,7 +12,7 @@ function ViewIpo() {
 
     const [ipos, setipos] = useState([]);
 
-    const GET_IPOS_API = 'http://localhost:8084/getIPOs';
+    const GET_IPOS_API = 'https://ayushstockmarketspring.herokuapp.com/getIPOs';
     async function GetIposApi() {
         const res = await fetch(GET_IPOS_API, {
             method: 'GET',
@@ -41,7 +41,7 @@ function ViewIpo() {
     const [remarks, setremarks] = useState('');
 
     async function SearchByCompanyApi(cName) {
-        const res = await fetch(`http://localhost:8084/getIPOByCompanyName?companyName=${cName}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getIPOByCompanyName?companyName=${cName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -52,7 +52,7 @@ function ViewIpo() {
     }
 
     async function SearchChronologicallyApi() {
-        const res = await fetch('http://localhost:8084/getIPOChronologically', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/getIPOChronologically', {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",

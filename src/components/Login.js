@@ -14,7 +14,7 @@ function Login() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     async function LoginApi() {
-        const res = await fetch('http://localhost:8084/getUserByNameAndPass', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/getUserByNameAndPass', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",

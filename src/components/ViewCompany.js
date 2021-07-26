@@ -56,7 +56,7 @@ function ViewCompany() {
     const [exchanges, setexchanges] = useState([]);
 
 
-    const GET_COMPANIES_API = 'http://localhost:8084/getCompanies';
+    const GET_COMPANIES_API = 'https://ayushstockmarketspring.herokuapp.com/getCompanies';
     async function GetCompaniesApi() {
         const res = await fetch(GET_COMPANIES_API, {
             method: 'GET',
@@ -79,7 +79,7 @@ function ViewCompany() {
 
 
     async function SearchByCompanyNameApi(companyName) {
-        const res = await fetch(`http://localhost:8084/getCompanyByName?companyName=${companyName}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getCompanyByName?companyName=${companyName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -90,7 +90,7 @@ function ViewCompany() {
     }
 
     async function SearchByMatchNameApi(matchtext) {
-        const res = await fetch(`http://localhost:8084/getMatchingCompanies?companyName=${matchtext}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getMatchingCompanies?companyName=${matchtext}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -132,7 +132,7 @@ function ViewCompany() {
     }
 
     async function SearchForExchangesApi(companyName) {
-        const res = await fetch(`http://localhost:8084/getExchangesOfCompany/${companyName}`, {
+        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getExchangesOfCompany/${companyName}`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",

@@ -14,7 +14,7 @@ function ManageIpo() {
 
     const [update, setUpdate] = useState(false);
 
-    const GET_IPOS_API = 'http://localhost:8084/getIPOs';
+    const GET_IPOS_API = 'https://ayushstockmarketspring.herokuapp.com/getIPOs';
     async function GetIposApi() {
         const res = await fetch(GET_IPOS_API, {
             method: 'GET',
@@ -43,7 +43,7 @@ function ManageIpo() {
     const [remarks, setremarks] = useState('');
 
     async function AddIpoApi() {
-        const res = await fetch('http://localhost:8084/addIPO', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/addIPO', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -83,7 +83,7 @@ function ManageIpo() {
     }
 
     async function UpdateIpoApi() {
-        const res = await fetch('http://localhost:8084/updateIPO', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/updateIPO', {
             method: 'PUT',
             headers: {
                 "Access-Control-Allow-Origin": "*",

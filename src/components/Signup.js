@@ -12,7 +12,7 @@ function Signup() {
     const [mobilenumber, setmobilenumber] = useState('');
 
     async function SignupApi() {
-        const res = await fetch('http://localhost:8084/setuserapi', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/setuserapi', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
