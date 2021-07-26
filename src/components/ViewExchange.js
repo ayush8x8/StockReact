@@ -70,7 +70,7 @@ function ViewExchange() {
             setcompanies(data);
             console.log(data);
 
-            alert('Results updated');
+            // alert('Results updated');
         });
 
         // setcompanyName('')

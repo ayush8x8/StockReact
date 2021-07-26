@@ -25,7 +25,7 @@ function ManageProfile({ location }) {
     const [mobilenumber, setmobilenumber] = useState('');
     const [email, setemail] = useState('');
 
-    const GET_USER_API = 'http://localhost:8084/getUserByNameAndPass';
+    const GET_USER_API = 'https://ayushstockmarketspring.herokuapp.com/getUserByNameAndPass';
     async function GetUserApi() {
         const res = await fetch(GET_USER_API, {
             method: 'POST',
