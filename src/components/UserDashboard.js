@@ -1,50 +1,62 @@
 import React, { useState } from 'react';
-import ManageCompany from './ManageCompany';
-import ManageExchange from './ManageExchange';
-import ManageIpo from './ManageIpo';
+import ViewCompany from './ViewCompany';
+import ViewExchange from './ViewExchange';
+import ViewIpo from './ViewIpo';
+import ViewSector from './ViewSector';
 import ManageProfile from './ManageProfile';
+import ComparisonCharts from './ComparisonCharts';
 import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import { Button, Container, Nav } from 'react-bootstrap';
 
 function UserDashboard() {
 
     const [comp, setComp] = useState('');
+    // const history = useHistory();
 
     return (
-        <div>
-            <hr></hr>
+        <Container>
+            <hr style={{ color: '#39FF14' }}></hr>
             <center><h2>User Dashboard</h2></center>
+            <br />
 
-            <center>
-                <div>
-                    <div>
-                        <button onClick={function () { setComp('ManageProfile') }}>User Profile</button>
-                        <span>  </span>
-                        <button onClick={function () { setComp('ManageCompany') }}>Manage Company</button>
-                        <span>  </span>
-                        <button onClick={function () { setComp('ManageExchange') }}>Manage Exchange</button>
-                        <span>  </span>
-                        <button onClick={function () { setComp('ManageIpo') }}>Update IPO details</button>
-                        <span>  </span>
-                        <button>Logout</button>
-                    </div>
-                    <div>
-                        {comp === 'ManageCompany' && (
-                            <ManageCompany />
-                        )}
-                        {comp === 'ManageExchange' && (
-                            <ManageExchange />
-                        )}
-                        {comp === 'ManageIpo' && (
-                            <ManageIpo />
-                        )}
-                        {comp === 'ManageProfile' && (
-                            <ManageProfile />
-                        )}
-                    </div>
-                </div>
-            </center>
+            <Nav fill variant="pills">
+                <Nav.Item><Nav.Link onClick={function () { setComp('ManageProfile') }} eventKey="a">User Profile</Nav.Link></Nav.Item>
 
-        </div>
+                <Nav.Item><Nav.Link onClick={function () { setComp('ViewCompany') }} eventKey="b">View Company Info</Nav.Link></Nav.Item>
+
+                <Nav.Item><Nav.Link onClick={function () { setComp('ViewSector') }} eventKey="c">View Sector Info</Nav.Link></Nav.Item>
+
+                <Nav.Item><Nav.Link onClick={function () { setComp('ViewExchange') }} eventKey="d">View Exchange Info</Nav.Link></Nav.Item>
+
+                <Nav.Item><Nav.Link onClick={function () { setComp('ViewIpo') }} eventKey="e">View IPO Info</Nav.Link></Nav.Item>
+
+
+            </Nav>
+            {/* <BrowserRouter>
+                <NavLink activeClassName="active" to="/logout" style={{ textDecoration: 'none' }} ><Button variant="outline-info">Logout</Button>{' '}</NavLink>
+            </BrowserRouter> */}
+            <div>
+                {comp === 'ViewCompany' && (
+                    <ViewCompany />
+                )}
+                {comp === 'ViewSector' && (
+                    <ViewSector />
+                )}
+                {comp === 'ViewExchange' && (
+                    <ViewExchange />
+                )}
+                {comp === 'ViewIpo' && (
+                    <ViewIpo />
+                )}
+                {comp === 'ManageProfile' && (
+                    <ManageProfile />
+                )}
+                {comp === 'ComparisonCharts' && (
+                    <ComparisonCharts />
+                )}
+            </div>
+        </Container>
     )
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 import Login from './Login';
 import Signup from './Signup';
@@ -8,39 +8,52 @@ import ManageExchange from './ManageExchange';
 import ManageIpo from './ManageIpo';
 import SheetJSApp from './SheetJSApp';
 import UserDashboard from './UserDashboard';
+import Button from 'react-bootstrap/Button';
+// import '../styles/home.css'
 
 function Home() {
 
+    const [togglenavlink, settogglenavlink] = useState(true);
 
+    const ssettogglenavlink = () => {
+        settogglenavlink(!togglenavlink);
+    }
 
     return (
-        <div>
-            <p>Welcome to Stock Market Charting!</p>
-            <p>Choose an option:</p>
-            <p>
-                <BrowserRouter>
-                    <div>
+        <center>
+            <div className='homecomp'>
+                <h2>Welcome to Stock Market Charting 📈</h2>
+                <br />
+                <h3>Choose an option:</h3>
+                <br />
+                <p>
+                    <BrowserRouter>
                         <div>
-                            <NavLink activeClassName="active" to="/login">Login</NavLink>
-                            <span> or </span>
-                            <NavLink activeClassName="active" to="/signup">Signup</NavLink>
+                            <div>
+                                <NavLink activeClassName="active" to="/login" style={{ textDecoration: 'none' }}><Button variant="outline-info">Login</Button>{' '}</NavLink>
+
+                                <NavLink activeClassName="active" to="/signup" style={{ textDecoration: 'none' }} ><Button variant="outline-info">Signup</Button>{' '}</NavLink>
+
+
+                            </div>
+                            <div>
+                                <Switch>
+                                    <Route path="/login" component={Login} />
+                                    <Route path="/signup" component={Signup} />
+                                    <Route path="/admindashboard" component={AdminDashboard} />
+                                    <Route path="/userdashboard" component={UserDashboard} />
+                                    <Route path="/importdata" component={SheetJSApp} />
+                                    <Route path="/managecompany" component={ManageCompany} />
+                                    <Route path="/manageexchange" component={ManageExchange} />
+                                    <Route path="/manageipo" component={ManageIpo} />
+                                    <Route path="/logout" component={Login} />
+                                </Switch>
+                            </div>
                         </div>
-                        <div>
-                            <Switch>
-                                <Route path="/login" component={Login} />
-                                <Route path="/signup" component={Signup} />
-                                <Route path="/admindashboard" component={AdminDashboard} />
-                                <Route path="/userdashboard" component={UserDashboard} />
-                                <Route path="/importdata" component={SheetJSApp} />
-                                <Route path="/managecompany" component={ManageCompany} />
-                                <Route path="/manageexchange" component={ManageExchange} />
-                                <Route path="/manageipo" component={ManageIpo} />
-                            </Switch>
-                        </div>
-                    </div>
-                </BrowserRouter>
-            </p>
-        </div>
+                    </BrowserRouter>
+                </p>
+            </div>
+        </center>
     );
 }
 

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import '../styles/stylesheet.css';
+import { Button, Container, Form, Table } from 'react-bootstrap';
 
 function ManageProfile({ location }) {
 
@@ -74,7 +75,7 @@ function ManageProfile({ location }) {
                 console.log(data);
 
             });
-            alert('User updated successfully');
+            // alert('User updated successfully');
         });
 
         setuserName('')
@@ -84,59 +85,66 @@ function ManageProfile({ location }) {
     }
 
     return (
-        <div>
-            <center>
-                <h3>User Info</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>EMAIL</th>
-                            <th>MOBILE NUMBER</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.mobilenumber}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br /><br />
+        <Container>
+            <br></br>
+            <h3>User Info:</h3>
+            <br></br>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>MOBILE NUMBER</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr key={user.id}>
+                        <td>{user.id}</td>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.mobilenumber}</td>
+                    </tr>
+                </tbody>
+            </Table>
+            <br /><br />
 
-                <button onClick={sshowForm} >Update User</button>
-
-                {showForm && (
-                    <form onSubmit={onUpdateUser}>
-                        <p>
-                            <label>User Name : </label>
-                            <input type="text"
-                                value={userName}
-                                onChange={(e) => setuserName(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>User Password : </label>
-                            <input type="text" value={password}
-                                onChange={(e) => setpassword(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Email : </label>
-                            <input type="text" value={email}
-                                onChange={(e) => setemail(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Mobile Number : </label>
-                            <input type="text" value={mobilenumber}
-                                onChange={(e) => setmobilenumber(e.target.value)} />
-                        </p>
-                        <input type='submit' value='Update User' />
-                    </form>
-                )}
-            </center>
-        </div>
+            <Button variant="outline-secondary" type="submit" onClick={sshowForm}>
+                Update
+            </Button>
+            <br /><br />
+            {showForm && (
+                <Form onSubmit={onUpdateUser}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>User Name : </Form.Label>
+                        <Form.Control type="text"
+                            value={userName}
+                            onChange={(e) => setuserName(e.target.value)} />
+                    
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>User Password : </Form.Label>
+                        <Form.Control type="text" value={password}
+                            onChange={(e) => setpassword(e.target.value)} />
+                    
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Email : </Form.Label>
+                        <Form.Control type="text" value={email}
+                            onChange={(e) => setemail(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Mobile Number : </Form.Label>
+                        <Form.Control type="text" value={mobilenumber}
+                            onChange={(e) => setmobilenumber(e.target.value)} />
+                    </Form.Group>
+                    <br /><br />
+                    <Button variant="outline-success" type="submit">
+                        Update User
+                    </Button>
+                </Form>
+            )}
+        </Container>
     )
 }
 

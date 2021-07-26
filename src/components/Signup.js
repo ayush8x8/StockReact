@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container, Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 function Signup() {
@@ -31,10 +32,10 @@ function Signup() {
             return
         }
 
-        
+
 
         SignupApi().then((data) => {
-            
+
             history.push("/login");
             console.log(data);
         });
@@ -46,49 +47,54 @@ function Signup() {
 
     }
     return (
-        <div>
-            <hr></hr>
-            <h3>Signup</h3>
-            <form onSubmit={onSubmit}>
-                <div >
-                    <label>Username: </label>
-                    <input
-                        type='text'
-                        placeholder='Username'
-                        value={userName}
-                        onChange={(e) => setuserName(e.target.value)}
-                    />
-                </div>
-                <div >
-                    <label>Password: </label>
-                    <input
-                        type='password'
-                        placeholder='Password'
-                        value={password}
-                        onChange={(e) => setpassword(e.target.value)}
-                    />
-                </div>
-                <div >
-                    <label>Email: </label>
-                    <input
-                        type='email'
-                        placeholder='Email'
-                        value={email}
-                        onChange={(e) => setemail(e.target.value)}
-                    />
-                </div>
-                <div >
-                    <label>Mobilenumber: </label>
-                    <input
-                        type='text'
-                        placeholder='Mobilenumber'
-                        value={mobilenumber}
-                        onChange={(e) => setmobilenumber(e.target.value)}
-                    />
-                </div>
-                <input type='submit' value='Signup' />
-            </form>
-        </div>
+        <Container>
+            <br />
+            <br />
+            <Container>
+                <Form onSubmit={onSubmit}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Username: </Form.Label>
+                        <Form.Control
+                            type='text'
+                            placeholder='Username'
+                            value={userName}
+                            onChange={(e) => setuserName(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                    <Form.Label>Password: </Form.Label>
+                        <Form.Control
+                            type='password'
+                            placeholder='Password'
+                            value={password}
+                            onChange={(e) => setpassword(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                    <Form.Label>Email: </Form.Label>
+                        <Form.Control
+                            type='email'
+                            placeholder='Email'
+                            value={email}
+                            onChange={(e) => setemail(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                    <Form.Label>Mobilenumber: </Form.Label>
+                        <Form.Control
+                            type='text'
+                            placeholder='Mobilenumber'
+                            value={mobilenumber}
+                            onChange={(e) => setmobilenumber(e.target.value)}
+                        />
+                    </Form.Group>
+                    <br />
+                    <Button variant="outline-dark" type="submit">
+                        Signup
+                    </Button>
+                </Form>
+            </Container>
+        </Container>
     )
 }
 

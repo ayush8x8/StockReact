@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button, Container, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 import AdminDashboard from './AdminDashboard';
@@ -44,11 +45,11 @@ function Login() {
             else if (data.response == "not found") {
                 alert('Please check your credentials!')
             }
-            else{
-                if(data.admin == true)
+            else {
+                if (data.admin == true)
                     history.push("/admindashboard");
-                if(data.admin == false)
-                history.push('/userdashboard', { userName: data.name, password: data.password, id: data.id });
+                if (data.admin == false)
+                    history.push('/userdashboard', { userName: data.name, password: data.password, id: data.id });
             }
         });
 
@@ -56,42 +57,37 @@ function Login() {
         setpassword('')
     }
     return (
-        <div>
-            {/* <BrowserRouter>
-                <div>
-                    <div>
-                        <Switch>
-                            <Route path="/admindashboard" component={AdminDashboard} />
-                        </Switch>
-                    </div>
-                </div>
-            </BrowserRouter> */}
-
-
-            <hr></hr>
-            <h3>Login</h3>
-            <form onSubmit={onSubmit}>
-                <div >
-                    <label>Username: </label>
-                    <input
-                        type='text'
-                        placeholder='Username'
-                        value={userName}
-                        onChange={(e) => setuserName(e.target.value)}
-                    />
-                </div>
-                <div >
-                    <label>Password: </label>
-                    <input
-                        type='password'
-                        placeholder='Password'
-                        value={password}
-                        onChange={(e) => setpassword(e.target.value)}
-                    />
-                </div>
-                <input type='submit' value='Login' />
-            </form>
-        </div>
+        <Container>
+            <br />
+            <br />
+            <Container>
+                <Form onSubmit={onSubmit}>
+                    <Form.Group className="mb-3" controlId="formBasicUsername">
+                        <Form.Label>Username: </Form.Label>
+                        <Form.Control
+                            type='text'
+                            placeholder='Username'
+                            value={userName}
+                            onChange={(e) => setuserName(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Password: </Form.Label>
+                        <Form.Control
+                            type='password'
+                            placeholder='Password'
+                            value={password}
+                            onChange={(e) => setpassword(e.target.value)}
+                        />
+                    </Form.Group>
+                    {/* <input type='submit' value='Login' /> */}
+                    <br />
+                    <Button variant="outline-dark" type="submit">
+                        Login
+                    </Button>
+                </Form>
+            </Container>
+        </Container>
     )
 }
 

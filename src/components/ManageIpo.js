@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css';
 
 function ManageIpo() {
@@ -70,7 +71,7 @@ function ManageIpo() {
                 console.log(data);
 
             });
-            alert('IPO added successfully');
+            // alert('IPO added successfully');
             console.log(data);
         });
 
@@ -110,7 +111,7 @@ function ManageIpo() {
                 console.log(data);
 
             });
-            alert('IPO updated successfully');
+            // alert('IPO updated successfully');
             console.log(data);
         });
 
@@ -119,13 +120,15 @@ function ManageIpo() {
         settotalNumberOfShares('')
         setpricePerShare('')
         setremarks('')
+        setUpdate(false);
     }
 
     return (
-        <div>
-            <center>
-                <h3>List of IPOs</h3>
-                <table>
+        <Container>
+                <br></br>
+                <h3>List of IPOs:</h3>
+                <br></br>
+                <Table bordered striped hover>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -134,6 +137,7 @@ function ManageIpo() {
                             <th>TOTAL NO OF SHARES</th>
                             <th>PRICE PER SHARE</th>
                             <th>REMARKS</th>
+                            <th>UPDATE</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -146,7 +150,7 @@ function ManageIpo() {
                                     <td>{ipo.totalNumberOfShares}</td>
                                     <td>{ipo.pricePerShare}</td>
                                     <td>{ipo.remarks}</td>
-                                    <td><button onClick={() => {
+                                    <td><Button variant="outline-secondary" onClick={() => {
                                         sshowForm();
                                         {
                                             setid(ipo.id);
@@ -158,50 +162,51 @@ function ManageIpo() {
                                         }
                                         setUpdate(true);
                                     }}>
-                                        Edit</button></td>
+                                        Edit</Button></td>
                                 </tr>
                             )
                         }
                     </tbody>
-                </table>
+                </Table>
 
                 <br /><br />
 
-                <button onClick={sshowForm} >{update ? "Update IPO" : "Add IPO"}</button>
+                <Button variant="outline-secondary" onClick={sshowForm} >{update ? "Update IPO" : "Add IPO"}</Button>
 
                 {showForm && (
-                    <form  onSubmit={update ? onUpdateIpo : onSubmitIpo}>
-                        <p>
-                            <label>Company Name : </label>
-                            <input type="text"
+                    <Form  onSubmit={update ? onUpdateIpo : onSubmitIpo}>
+                        <Form.Group className="mb-3">
+                            <br></br>
+                            <Form.Label>Company Name : </Form.Label>
+                            <Form.Control type="text"
                                 value={cName}
                                 onChange={(e) => setcName(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Open Date Time : </label>
-                            <input type="text" value={openDateTime}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Open Date Time : </Form.Label>
+                            <Form.Control type="text" value={openDateTime}
                                 onChange={(e) => setopenDateTime(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Total No Of Shares : </label>
-                            <input type="text" value={totalNumberOfShares}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Total No Of Shares : </Form.Label>
+                            <Form.Control type="text" value={totalNumberOfShares}
                                 onChange={(e) => settotalNumberOfShares(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Price Per Share : </label>
-                            <input type="text" value={pricePerShare}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Price Per Share : </Form.Label>
+                            <Form.Control type="text" value={pricePerShare}
                                 onChange={(e) => setpricePerShare(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Remarks: </label>
-                            <input type="text" value={remarks}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Remarks: </Form.Label>
+                            <Form.Control type="text" value={remarks}
                                 onChange={(e) => setremarks(e.target.value)} />
-                        </p>
-                        <input type='submit' value={update ? 'Update IPO' : 'Add IPO'} />
-                    </form>
+                        </Form.Group>
+                        <Button variant="outline-success" type='submit'>{update ? 'Update IPO' : 'Add IPO'}</Button>
+                    </Form>
                 )}
-            </center>
-        </div>
+            
+        </Container>
     )
 }
 

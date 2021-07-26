@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Button, Container, Form, Table } from 'react-bootstrap';
-import '../styles/stylesheet.css'
+import '../styles/stylesheet.css';
 
-function ManageExchange() {
+function ViewExchange() {
+
+    const [exchanges, setExchanges] = useState([]);
+    const [exchangeName, setexchangeName] = useState('');
+    const [companies, setcompanies] = useState([]);
+
 
     const [showForm, setShowForm] = useState(false);
+    const [showTable, setshowTable] = useState(false);
 
     const sshowForm = () => {
         setShowForm(!showForm);
+        setshowTable(false);
+        setexchangeName('')
     }
 
-    const [exchanges, setExchanges] = useState([]);
 
-    const [id, setid] = useState('');
-    const [exchangeName, setexchangeName] = useState('');
-    const [exchangeBrief, setexchangeBrief] = useState('');
-    const [address, setaddress] = useState('');
-    const [remarks, setremarks] = useState('');
 
     const GET_EXCHANGES_API = 'http://localhost:8084/getStockExchanges';
     async function GetExchangesApi() {
@@ -40,51 +42,45 @@ function ManageExchange() {
         });
     }, [])
 
-    async function AddExchangeApi() {
-        const res = await fetch('http://localhost:8084/addStockExchange', {
-            method: 'POST',
+    async function SearchForCompaniesApi(exchangeName) {
+        const res = await fetch(`http://localhost:8084/getCompanyByExchange?exchangeName=${exchangeName}`, {
+            method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ "name": exchangeName, "brief": exchangeBrief, "address": address, "remarks": remarks})
+            }
         });
-        return res;
+        return res.json();
     }
 
-    const onSubmitExchange = (e) => {
-        e.preventDefault()
+    const onSearchForCompanies = (e) => {
 
-        if (!exchangeName || !exchangeBrief || !address || !remarks) {
+        e.preventDefault();
+        setshowTable(true);
+        if (!exchangeName) {
             alert('Please fill the details')
             return
         }
 
-        sshowForm();
+        // sshowForm3();
 
-        AddExchangeApi().then((data) => {
-            GetExchangesApi().then((data) => {
-                setExchanges(data);
-                // console.log(data.exchangeName);
-                console.log(data);
-    
-            });
-            // alert('Exchange added successfully');
+        SearchForCompaniesApi(exchangeName).then((data) => {
+
+            setcompanies(data);
             console.log(data);
+
+            alert('Results updated');
         });
 
-        setexchangeName('')
-        setexchangeBrief('')
-        setaddress('')
-        setremarks('')
+        // setcompanyName('')
     }
 
     return (
         <Container>
             <br></br>
                 <h3>List of Exchanges:</h3>
-                <br></br>
+<br></br>
                 <Table bordered striped hover>
                     <thead>
                         <tr>
@@ -96,7 +92,7 @@ function ManageExchange() {
                         </tr>
                     </thead>
                     <tbody>
-                        {
+                        {(
                             exchanges.map(exchange =>
                                 <tr key={exchange.id}>
                                     <td>{exchange.id}</td>
@@ -106,14 +102,16 @@ function ManageExchange() {
                                     <td>{exchange.remarks}</td>
                                 </tr>
                             )
+                        )
                         }
                     </tbody>
                 </Table>
                 <br /><br />
-                <Button variant="outline-secondary" onClick={sshowForm} >Add New Exchange</Button>
+
+                <Button variant="outline-secondary" onClick={sshowForm} >View Companies Listed</Button>
 
                 {showForm && (
-                    <Form onSubmit={onSubmitExchange}>
+                    <Form onSubmit={onSearchForCompanies}>
                         <Form.Group className="mb-3">
                             <br></br>
                             <Form.Label>Exchange Name : </Form.Label>
@@ -121,26 +119,36 @@ function ManageExchange() {
                                 value={exchangeName}
                                 onChange={(e) => setexchangeName(e.target.value)} />
                         </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Exchange Brief : </Form.Label>
-                            <Form.Control type="text" value={exchangeBrief}
-                                onChange={(e) => setexchangeBrief(e.target.value)} />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Address : </Form.Label>
-                            <Form.Control type="text" value={address}
-                                onChange={(e) => setaddress(e.target.value)} />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Remarks : </Form.Label>
-                            <Form.Control type="text" value={remarks}
-                                onChange={(e) => setremarks(e.target.value)} />
-                        </Form.Group>
-                        <Button variant="outline-success" type='submit'>Add New Exchange</Button>
+                        <Button variant="outline-success" type="submit">
+                        Search
+                    </Button>
                     </Form>
                 )}
+
+                <br /><br />
+
+                {showTable && (<Table bordered striped hover >
+                    <thead>
+                        <tr>
+                            <th>COMPANIES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {(
+                            companies.map((company, index) =>
+                                <tr key={index}>
+                                    <td>{company}</td>
+                                </tr>
+                            )
+                        )
+                        }
+                    </tbody>
+                </Table>
+                )
+                }
+            
         </Container>
     )
 }
 
-export default ManageExchange
+export default ViewExchange

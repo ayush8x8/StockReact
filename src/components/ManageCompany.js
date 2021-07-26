@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css';
 
 function ManageCompany() {
@@ -15,6 +16,8 @@ function ManageCompany() {
 
     const sshowExForm = () => {
         setShowExForm(!showExForm);
+        setcompanyName('');
+        setexchangeName('');
     }
 
     const [companies, setCompanies] = useState([]);
@@ -91,7 +94,7 @@ function ManageCompany() {
             },
             body: JSON.stringify({ "company_name": company_name, "exchange_name": exchange_name })
         });
-        alert('Company mapped to exchange!')
+        // alert('Company mapped to exchange!')
         return res;
     }
 
@@ -121,7 +124,7 @@ function ManageCompany() {
             console.log(data);
 
         });
-        alert('Company deleted successfully');
+        // alert('Company deleted successfully');
         return res;
     }
 
@@ -141,7 +144,7 @@ function ManageCompany() {
                 console.log(data);
 
             });
-            alert('Company updated successfully');
+            // alert('Company updated successfully');
             console.log(data);
         });
 
@@ -151,6 +154,7 @@ function ManageCompany() {
         setboardOfDirectors('')
         setsectorName('')
         setturnover('')
+        setUpdate(false);
     }
 
     const onSubmitCompany = (e) => {
@@ -169,7 +173,7 @@ function ManageCompany() {
                 console.log(data);
 
             });
-            alert('Company added successfully');
+            // alert('Company added successfully');
             console.log(data);
         });
 
@@ -183,10 +187,11 @@ function ManageCompany() {
 
 
     return (
-        <div>
-            <center>
-                <h3>List of Companies</h3>
-                <table>
+        <Container>
+            <br></br>
+                <h3>List of Companies:</h3>
+                <br></br>
+                <Table bordered striped hover>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -212,7 +217,7 @@ function ManageCompany() {
                                     <td>{company.boardOfDirectors}</td>
                                     <td>{company.sectorName}</td>
                                     <td>{company.turnover}</td>
-                                    <td><button onClick={() => {
+                                    <td><Button variant="outline-secondary" onClick={() => {
                                         sshowForm();
                                         {
                                             setid(company.id);
@@ -225,10 +230,10 @@ function ManageCompany() {
                                         }
                                         setUpdate(true);
                                     }}>
-                                        Edit</button></td>
-                                    <td><button onClick={function () {
+                                        Edit</Button></td>
+                                    <td><Button variant="outline-secondary" onClick={function () {
                                         DeleteCompanyApi(company.companyName);
-                                    }}>Delete</button></td>
+                                    }}>Delete</Button></td>
                                     {/* <td>
                                         
                                     </td> */}
@@ -236,67 +241,69 @@ function ManageCompany() {
                             )
                         }
                     </tbody>
-                </table>
+                </Table>
                 <br /><br />
 
-                <button onClick={sshowForm} >{update ? "Update Company" : "Add New Company"}</button>
+                <Button variant="outline-secondary" onClick={sshowForm} >{update ? "Update Company" : "Add New Company"}</Button>
 
                 {showForm && (
-                    <form onSubmit={update ? onUpdateCompany : onSubmitCompany}>
-                        <p>
-                            <label>Company Name : </label>
-                            <input type="text"
+                    <Form onSubmit={update ? onUpdateCompany : onSubmitCompany}>
+                        <Form.Group className="mb-3">
+                            <br></br>
+                            <Form.Label>Company Name : </Form.Label>
+                            <Form.Control type="text"
                                 value={companyName}
                                 onChange={(e) => setcompanyName(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Company Brief : </label>
-                            <input type="text" value={companyBrief}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Company Brief : </Form.Label>
+                            <Form.Control type="text" value={companyBrief}
                                 onChange={(e) => setcompanyBrief(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>CEO : </label>
-                            <input type="text" value={ceo}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>CEO : </Form.Label>
+                            <Form.Control type="text" value={ceo}
                                 onChange={(e) => setceo(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Board of Directors : </label>
-                            <input type="text" value={boardOfDirectors}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Board of Directors : </Form.Label>
+                            <Form.Control type="text" value={boardOfDirectors}
                                 onChange={(e) => setboardOfDirectors(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Sector Name : </label>
-                            <input type="text" value={sectorName}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Sector Name : </Form.Label>
+                            <Form.Control type="text" value={sectorName}
                                 onChange={(e) => setsectorName(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Turnover : </label>
-                            <input type="text" value={turnover}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Turnover : </Form.Label>
+                            <Form.Control type="text" value={turnover}
                                 onChange={(e) => setturnover(e.target.value)} />
-                        </p>
-                        <input type='submit' value={update ? 'Update Company' : 'Add Company'} />
-                    </form>
+                        </Form.Group>
+                        <Button variant="outline-success" type='submit'>{update ? 'Update Company' : 'Add Company'}</Button>
+                    </Form>
                 )}
                 <br></br>
                 <br></br>
-                <button onClick={sshowExForm}>Add Exchange For Company</button>
+                <Button variant="outline-secondary" onClick={sshowExForm}>Add Exchange For Company</Button>
                 {showExForm && (
-                    <form onSubmit={() => { StockExchangeToCompanyApi(exchangeName, companyName); sshowExForm(); }}>
-                        <p>
-                            <label>Company Name : </label>
-                            <input type="text" value={companyName}
+                    <Form onSubmit={() => { StockExchangeToCompanyApi(exchangeName, companyName); sshowExForm(); }}>
+                        <Form.Group className="mb-3">
+                            <br></br>
+                            <Form.Label>Company Name : </Form.Label>
+                            <Form.Control type="text" value={companyName}
                                 onChange={(e) => setcompanyName(e.target.value)} />
-                        </p>
-                        <p>
-                            <label>Exchange Name : </label>
-                            <input type="text" value={exchangeName}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Exchange Name : </Form.Label>
+                            <Form.Control type="text" value={exchangeName}
                                 onChange={(e) => setexchangeName(e.target.value)} />
-                        </p>
-                        <input type='submit' value='Add' />
-                    </form>
+                        </Form.Group>
+                        <Button variant="outline-success" type='submit'>Add</Button>
+                    </Form>
                 )}
-            </center>
-        </div >
+            
+        </Container >
     )
 }
 

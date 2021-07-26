@@ -6,6 +6,7 @@
    - babel.js in-browser transpiler should be loaded before this script
 */
 import React from "react";
+import { Form } from "react-bootstrap";
 import XLSX from "xlsx";
 import ManageImport from "./ManageImport";
 
@@ -26,13 +27,13 @@ export default class SheetJSApp extends React.Component {
     reader.onload = e => {
       /* Parse data */
       const bstr = e.target.result;
-      const wb = XLSX.read(bstr, { type: rABS ? "binary" : "array" });
+      const wb = XLSX.read(bstr, { type: (rABS ? "binary" : "array" ),cellDates:true, cellText:false});
       /* Get first worksheet */
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       console.log(rABS, wb);
       /* Convert array of arrays */
-      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1 , raw:false, dateNF:'yyyy-mm-dd'});
       console.log(JSON.stringify(data)+"this data needs to be passed to rest endpoint to save prices");
       /* Update state */
       this.setState({ data: data, cols: make_cols(ws["!ref"]) });
@@ -58,6 +59,7 @@ export default class SheetJSApp extends React.Component {
         </div>
         <div className="row">
           <div className="col-xs-12">
+            {/* <br></br> */}
             <button
               disabled={!this.state.data.length}
               className="btn btn-success"
@@ -65,8 +67,10 @@ export default class SheetJSApp extends React.Component {
             >
               Export
             </button>
+            
           </div>
         </div>
+        <br></br>
         <div className="row">
           <div className="col-xs-12">
             <OutTable data={this.state.data} cols={this.state.cols} />
@@ -129,18 +133,19 @@ class DataInput extends React.Component {
   }
   render() {
     return (
-      <form className="form-inline">
-        <div className="form-group">
-          <label htmlFor="file">Spreadsheet</label>
-          <input
+      <Form>
+        <Form.Group className="mb-3">
+          <br></br>
+          <Form.Label>StockPrice Spreadsheet: </Form.Label>
+          <Form.Control
             type="file"
             className="form-control"
             id="file"
             accept={SheetJSFT}
             onChange={this.handleChange}
           />
-        </div>
-      </form>
+        </Form.Group>
+      </Form>
     );
   }
 }
