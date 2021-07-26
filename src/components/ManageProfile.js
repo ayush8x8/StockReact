@@ -47,7 +47,7 @@ function ManageProfile({ location }) {
     }, [])
 
     async function UpdateUserApi() {
-        const res = await fetch('http://localhost:8084/updateUser', {
+        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/updateUser', {
             method: 'PUT',
             headers: {
                 "Access-Control-Allow-Origin": "*",
