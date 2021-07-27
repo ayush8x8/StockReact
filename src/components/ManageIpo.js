@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css';
+import { deployhost2, deployhost } from './deploylink';
 
 function ManageIpo() {
 
@@ -14,14 +15,15 @@ function ManageIpo() {
 
     const [update, setUpdate] = useState(false);
 
-    const GET_IPOS_API = 'https://ayushstockmarketspring.herokuapp.com/getIPOs';
+    const GET_IPOS_API = `${deployhost2}/getIPOs`;
     async function GetIposApi() {
         const res = await fetch(GET_IPOS_API, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -43,12 +45,13 @@ function ManageIpo() {
     const [remarks, setremarks] = useState('');
 
     async function AddIpoApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/addIPO', {
+        const res = await fetch(`${deployhost2}/addIPO`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "cName": cName, "openDateTime": openDateTime, "totalNumberOfShares": totalNumberOfShares, "pricePerShare": pricePerShare, "remarks": remarks })
         });
@@ -83,12 +86,13 @@ function ManageIpo() {
     }
 
     async function UpdateIpoApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/updateIPO', {
+        const res = await fetch(`${deployhost2}/updateIPO`, {
             method: 'PUT',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "cName": cName, "openDateTime": openDateTime, "totalNumberOfShares": totalNumberOfShares, "pricePerShare": pricePerShare, "remarks": remarks, "id": id })
         });

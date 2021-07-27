@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css';
+import { deployhost2, deployhost } from './deploylink';
 
 function ManageCompany() {
 
@@ -36,14 +37,15 @@ function ManageCompany() {
     //     return res.json();
     // }
 
-    const GET_COMPANIES_API = 'https://ayushstockmarketspring.herokuapp.com/getCompanies';
+    const GET_COMPANIES_API = `${deployhost2}/getCompanies`;
     async function GetCompaniesApi() {
         const res = await fetch(GET_COMPANIES_API, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -72,12 +74,13 @@ function ManageCompany() {
     const [exchangeName, setexchangeName] = useState('');
 
     async function AddCompanyApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/addCompany', {
+        const res = await fetch(`${deployhost2}/addCompany`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "companyName": companyName, "companyBrief": companyBrief, "ceo": ceo, "boardOfDirectors": boardOfDirectors, "sectorName": sectorName, "turnover": turnover })
         });
@@ -85,12 +88,13 @@ function ManageCompany() {
     }
 
     async function StockExchangeToCompanyApi(exchange_name, company_name) {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/mapStockExchangeToCompany', {
+        const res = await fetch(`${deployhost2}/mapStockExchangeToCompany`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "company_name": company_name, "exchange_name": exchange_name })
         });
@@ -99,12 +103,13 @@ function ManageCompany() {
     }
 
     async function UpdateCompanyApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/updateCompany', {
+        const res = await fetch(`${deployhost2}/updateCompany`, {
             method: 'PUT',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "companyName": companyName, "companyBrief": companyBrief, "ceo": ceo, "boardOfDirectors": boardOfDirectors, "sectorName": sectorName, "turnover": turnover, "id": id })
         });
@@ -112,11 +117,12 @@ function ManageCompany() {
     }
 
     async function DeleteCompanyApi(companyName) {
-        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/deleteCompanyByName/${companyName}`, {
+        const res = await fetch(`${deployhost2}/deleteCompanyByName/${companyName}`, {
             method: 'DELETE',
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
+                "Access-Control-Allow-Credentials": true,
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         GetCompaniesApi().then((data) => {

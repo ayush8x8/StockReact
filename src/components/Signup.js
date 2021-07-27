@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { deployhost2, deployhost } from './deploylink';
 
 function Signup() {
 
@@ -12,14 +13,14 @@ function Signup() {
     const [mobilenumber, setmobilenumber] = useState('');
 
     async function SignupApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/setuserapi', {
+        const res = await fetch(`${deployhost2}/setuserapi`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ "name": userName, "password": password, "email": email, "mobilenumber": mobilenumber, admin: false, confirmed: false })
+            body: JSON.stringify({ "name": userName, "password": password, "email": email, "mobilenumber": mobilenumber, "admin": false, "confirmed": false, "role": "user" })
         });
         return res;
     }

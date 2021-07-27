@@ -3,6 +3,7 @@ import { Button, Container, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 import AdminDashboard from './AdminDashboard';
+import { deployhost2, deployhost } from './deploylink';
 
 function Login() {
 
@@ -10,18 +11,16 @@ function Login() {
 
     const [userName, setuserName] = useState('')
     const [password, setpassword] = useState('')
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
 
     async function LoginApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/getUserByNameAndPass', {
+        const res = await fetch(`${deployhost2}/authenticate`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ "name": userName, "password": password })
+            body: JSON.stringify({ "username": userName, "password": password })
         });
         return res.json();
     }
@@ -35,22 +34,22 @@ function Login() {
         }
 
         LoginApi().then((data) => {
-            window.sessionStorage.setItem("userName", data.name);
-            window.sessionStorage.setItem("userObj", JSON.stringify(data));
-            console.log(window.sessionStorage.getItem("userObj"));
+            window.sessionStorage.setItem("userName", data.user.name);
+            // window.sessionStorage.setItem("userObj", JSON.stringify(data));
+            // console.log(window.sessionStorage.getItem("userObj"));
+            window.sessionStorage.setItem("token", data.token);
             console.log(data);
-            if (data.response == "not confirmed") {
-                alert('Please confirm from your email id!')
-            }
-            else if (data.response == "not found") {
-                alert('Please check your credentials!')
-            }
-            else {
-                if (data.admin == true)
+            // if (data.response == "not confirmed") {
+            //     alert('Please confirm from your email id!')
+            // }
+            // else if (data.response == "not found") {
+            //     alert('Please check your credentials!')
+            // }
+            
+                if (data.user.admin == true)
                     history.push("/admindashboard");
-                if (data.admin == false)
-                    history.push('/userdashboard', { userName: data.name, password: data.password, id: data.id });
-            }
+                if (data.user.admin == false)
+                    history.push('/userdashboard', { userName: data.user.name, password: data.user.password, id: data.user.id });
         });
 
         setuserName('')

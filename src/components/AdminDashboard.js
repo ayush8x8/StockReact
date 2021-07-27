@@ -3,7 +3,7 @@ import ManageCompany from './ManageCompany';
 import ManageExchange from './ManageExchange';
 import ManageIpo from './ManageIpo';
 import SheetJSApp from './SheetJSApp';
-import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
+// import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 import { Container, Nav } from 'react-bootstrap';
 
 function AdminDashboard() {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css';
+import { deployhost2, deployhost } from './deploylink';
 
 function ViewIpo() {
 
@@ -12,14 +13,15 @@ function ViewIpo() {
 
     const [ipos, setipos] = useState([]);
 
-    const GET_IPOS_API = 'https://ayushstockmarketspring.herokuapp.com/getIPOs';
+    const GET_IPOS_API = `${deployhost2}/getIPOs`;
     async function GetIposApi() {
         const res = await fetch(GET_IPOS_API, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -41,22 +43,24 @@ function ViewIpo() {
     const [remarks, setremarks] = useState('');
 
     async function SearchByCompanyApi(cName) {
-        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getIPOByCompanyName?companyName=${cName}`, {
+        const res = await fetch(`${deployhost2}/getIPOByCompanyName?companyName=${cName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
+                "Access-Control-Allow-Credentials": true,
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
     }
 
     async function SearchChronologicallyApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/getIPOChronologically', {
+        const res = await fetch(`${deployhost2}/getIPOChronologically`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
+                "Access-Control-Allow-Credentials": true,
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();

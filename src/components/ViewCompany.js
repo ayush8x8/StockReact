@@ -4,7 +4,8 @@ import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css';
 import CompanyComparisonChart from './CompanyComparisonChart';
 import CompanyComparisonChart2 from './CompanyComparisonChart2';
-import CompanyComparisonChart3 from './CompanyComparisonChart3'
+import CompanyComparisonChart3 from './CompanyComparisonChart3';
+import { deployhost2, deployhost } from './deploylink';
 
 function ViewCompany() {
 
@@ -56,14 +57,15 @@ function ViewCompany() {
     const [exchanges, setexchanges] = useState([]);
 
 
-    const GET_COMPANIES_API = 'https://ayushstockmarketspring.herokuapp.com/getCompanies';
+    const GET_COMPANIES_API = `${deployhost2}/getCompanies`;
     async function GetCompaniesApi() {
         const res = await fetch(GET_COMPANIES_API, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -79,22 +81,24 @@ function ViewCompany() {
 
 
     async function SearchByCompanyNameApi(companyName) {
-        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getCompanyByName?companyName=${companyName}`, {
+        const res = await fetch(`${deployhost2}/getCompanyByName?companyName=${companyName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
+                "Access-Control-Allow-Credentials": true,
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
     }
 
     async function SearchByMatchNameApi(matchtext) {
-        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getMatchingCompanies?companyName=${matchtext}`, {
+        const res = await fetch(`${deployhost2}/getMatchingCompanies?companyName=${matchtext}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
+                "Access-Control-Allow-Credentials": true,
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -132,12 +136,13 @@ function ViewCompany() {
     }
 
     async function SearchForExchangesApi(companyName) {
-        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getExchangesOfCompany/${companyName}`, {
+        const res = await fetch(`${deployhost2}/getExchangesOfCompany/${companyName}`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();

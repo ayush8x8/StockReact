@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 import Login from './Login';
 import Signup from './Signup';
 import AdminDashboard from './AdminDashboard';
@@ -9,7 +9,6 @@ import ManageIpo from './ManageIpo';
 import SheetJSApp from './SheetJSApp';
 import UserDashboard from './UserDashboard';
 import Button from 'react-bootstrap/Button';
-// import '../styles/home.css'
 
 function Home() {
 
@@ -31,7 +30,7 @@ function Home() {
                         <div>
                             <div>
                                 <NavLink activeClassName="active" to="/login" style={{ textDecoration: 'none' }}><Button variant="outline-info">Login</Button>{' '}</NavLink>
-
+                                <span>&nbsp;</span>
                                 <NavLink activeClassName="active" to="/signup" style={{ textDecoration: 'none' }} ><Button variant="outline-info">Signup</Button>{' '}</NavLink>
 
 
@@ -46,7 +45,6 @@ function Home() {
                                     <Route path="/managecompany" component={ManageCompany} />
                                     <Route path="/manageexchange" component={ManageExchange} />
                                     <Route path="/manageipo" component={ManageIpo} />
-                                    <Route path="/logout" component={Login} />
                                 </Switch>
                             </div>
                         </div>

@@ -8,6 +8,7 @@ import Charts from 'fusioncharts/fusioncharts.charts';
 import ReactFC from 'react-fusioncharts';
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import { Button, Form } from 'react-bootstrap';
+import { deployhost2, deployhost } from './deploylink';
 
 
 import { Switch, HashRouter, Router, Route, Link } from "react-router-dom";
@@ -57,9 +58,9 @@ class ComparisonCharts extends Component {
 
         super(props);
         this.state = chartConfigs;
-        // this.state = chartConfigs2;
+        
         this.dosearch = this.dosearch.bind(this);
-        // this.dosearch2 = this.dosearch2.bind(this);
+        
         this.state.dataSource.data = []
     }
 
@@ -79,24 +80,15 @@ class ComparisonCharts extends Component {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Vary': 'Origin'
+                'Vary': 'Origin',
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "sectorName": sector1, "start": startdate, "end": enddate })
         };
 
-        // const myInit2 = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*',
-        //         'Vary': 'Origin'
-        //     },
-        //     body: JSON.stringify({ "sectorName": sector2, "start": startdate, "end": enddate })
-        // };
-
         // console.log(searchval);
         let data = [];
-        let endpoint = 'http://127.0.0.1:8084/getSectorPriceInRange';
+        let endpoint = `${deployhost2}/getSectorPriceInRange`;
         //you need to give end slash ony if you call from rest endpint
         fetch(endpoint, myInit1)
 
@@ -111,12 +103,7 @@ class ComparisonCharts extends Component {
                     'label': sector1,
                     'value': sector1price
                 }
-                // response.forEach((value, key) => {
-                //     //		data[key] = {
-                //     prevDs.data[key] = {
-                //         'label': response[key],
-                //         'value': response[key]
-                //     };
+                
                 this.setState({
                     dataSource: prevDs,
                 });
@@ -128,68 +115,6 @@ class ComparisonCharts extends Component {
 
     }
 
-    dosearch2() {
-
-        let sector2 = this.refs.sector2.value;//get node value or text value
-        // let sector2 = this.refs.sector2.value;
-        let startdate2 = this.refs.startdate2.value;
-        let enddate2 = this.refs.enddate2.value;
-        let sector1price;
-
-
-        const myInit1 = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Vary': 'Origin'
-            },
-            body: JSON.stringify({ "sectorName": sector2, "start": startdate2, "end": enddate2 })
-        };
-
-        // const myInit2 = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*',
-        //         'Vary': 'Origin'
-        //     },
-        //     body: JSON.stringify({ "sectorName": sector2, "start": startdate, "end": enddate })
-        // };
-
-        // console.log(searchval);
-        let data = [];
-        let endpoint = 'http://127.0.0.1:8084/getSectorPriceInRange';
-        //you need to give end slash ony if you call from rest endpint
-        fetch(endpoint, myInit1)
-
-            .then(response => {
-                return response.json();
-            })
-            .then(response => {
-                console.log(response);//real print of array
-                sector1price = response;
-                var prevDs = Object.assign({}, this.state.dataSource);
-                prevDs.data[i++] = {
-                    'label': sector2,
-                    'value': sector1price
-                }
-                // response.forEach((value, key) => {
-                //     //		data[key] = {
-                //     prevDs.data[key] = {
-                //         'label': response[key],
-                //         'value': response[key]
-                //     };
-                this.setState({
-                    dataSource: prevDs,
-                });
-                //     console.log('data' + JSON.stringify(data));
-                // });
-                // console.log('this.' + data);
-                // console.log('chart' + JSON.stringify(chartConfigs));
-            })//endo of .then line 53	
-
-    }
 
 
     render() {

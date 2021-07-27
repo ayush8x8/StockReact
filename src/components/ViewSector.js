@@ -4,6 +4,7 @@ import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css';
 import ComparisonCharts from './ComparisonCharts';
 import SectorComparisonChart2 from './SectorComparisonChart2';
+import { deployhost2, deployhost } from './deploylink';
 
 function ViewSector() {
 
@@ -52,14 +53,15 @@ function ViewSector() {
     const [sectors, setSectors] = useState([]);
     const [sector, setsector] = useState({});
 
-    const GET_SECTORS_API = 'https://ayushstockmarketspring.herokuapp.com/getSectors';
+    const GET_SECTORS_API = `${deployhost2}/getSectors`;
     async function GetSectorsApi() {
         const res = await fetch(GET_SECTORS_API, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -74,11 +76,12 @@ function ViewSector() {
     }, [])
 
     async function SearchBySectorNameApi(sectorName) {
-        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getSectorByName?sectorName=${sectorName}`, {
+        const res = await fetch(`${deployhost2}/getSectorByName?sectorName=${sectorName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
+                "Access-Control-Allow-Credentials": true,
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -107,12 +110,13 @@ function ViewSector() {
     }
 
     async function SearchForCompaniesApi(sectorName) {
-        const res = await fetch(`https://ayushstockmarketspring.herokuapp.com/getCompaniesInSector?sectorName=${sectorName}`, {
+        const res = await fetch(`${deployhost2}/getCompaniesInSector?sectorName=${sectorName}`, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();

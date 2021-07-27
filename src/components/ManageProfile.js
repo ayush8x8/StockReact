@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import '../styles/stylesheet.css';
 import { Button, Container, Form, Table } from 'react-bootstrap';
+import { deployhost2, deployhost } from './deploylink';
+
 
 function ManageProfile({ location }) {
 
@@ -25,16 +27,16 @@ function ManageProfile({ location }) {
     const [mobilenumber, setmobilenumber] = useState('');
     const [email, setemail] = useState('');
 
-    const GET_USER_API = 'https://ayushstockmarketspring.herokuapp.com/getUserByNameAndPass';
+    const GET_USER_API = `${deployhost2}/getUserByName?userName=${userName}`;
     async function GetUserApi() {
         const res = await fetch(GET_USER_API, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
-            body: JSON.stringify({ "name": userName, "password": password })
         });
         return res.json();
     }
@@ -47,12 +49,13 @@ function ManageProfile({ location }) {
     }, [])
 
     async function UpdateUserApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/updateUser', {
+        const res = await fetch(`${deployhost2}/updateUser`, {
             method: 'PUT',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "name": userName, "password": password, "email": email, "mobilenumber": mobilenumber, "admin": false, "confirmed": true, "id": id })
         });
@@ -120,12 +123,6 @@ function ManageProfile({ location }) {
                         <Form.Control type="text"
                             value={userName}
                             onChange={(e) => setuserName(e.target.value)} />
-                    
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>User Password : </Form.Label>
-                        <Form.Control type="text" value={password}
-                            onChange={(e) => setpassword(e.target.value)} />
                     
                     </Form.Group>
                     <Form.Group className="mb-3">

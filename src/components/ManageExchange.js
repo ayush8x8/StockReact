@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Button, Container, Form, Table } from 'react-bootstrap';
 import '../styles/stylesheet.css'
+import { deployhost2, deployhost } from './deploylink';
 
 function ManageExchange() {
 
@@ -19,14 +20,15 @@ function ManageExchange() {
     const [address, setaddress] = useState('');
     const [remarks, setremarks] = useState('');
 
-    const GET_EXCHANGES_API = 'https://ayushstockmarketspring.herokuapp.com/getStockExchanges';
+    const GET_EXCHANGES_API = `${deployhost2}/getStockExchanges`;
     async function GetExchangesApi() {
         const res = await fetch(GET_EXCHANGES_API, {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             }
         });
         return res.json();
@@ -41,12 +43,13 @@ function ManageExchange() {
     }, [])
 
     async function AddExchangeApi() {
-        const res = await fetch('https://ayushstockmarketspring.herokuapp.com/addStockExchange', {
+        const res = await fetch(`${deployhost2}/addStockExchange`, {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "name": exchangeName, "brief": exchangeBrief, "address": address, "remarks": remarks})
         });

@@ -7,6 +7,7 @@ import FusionCharts from 'fusioncharts';
 import Charts from 'fusioncharts/fusioncharts.charts';
 import ReactFC from 'react-fusioncharts';
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import { deployhost2, deployhost } from './deploylink';
 
 
 import { Switch, HashRouter, Router, Route, Link } from "react-router-dom";
@@ -77,7 +78,8 @@ class CompanyComparisonChart extends Component {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Vary': 'Origin'
+                'Vary': 'Origin',
+                "Authorization" : "Bearer "+window.sessionStorage.getItem("token")
             },
             body: JSON.stringify({ "companyName": company1, "start": startdate, "end": enddate })
         };
@@ -85,7 +87,7 @@ class CompanyComparisonChart extends Component {
 
         // console.log(searchval);
         let data = [];
-        let endpoint = 'http://127.0.0.1:8084/getCompanyStockPriceInRange';
+        let endpoint = `${deployhost2}/getCompanyStockPriceInRange`;
         //you need to give end slash ony if you call from rest endpoint
         fetch(endpoint, myInit1)
 
