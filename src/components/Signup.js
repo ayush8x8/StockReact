@@ -20,7 +20,7 @@ function Signup() {
                 "Access-Control-Allow-Credentials": true,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ "name": userName, "password": password, "email": email, "mobilenumber": mobilenumber, "admin": false, "confirmed": false, "role": "user" })
+            body: JSON.stringify({ "name": userName, "password": password, "email": email, "mobilenumber": mobilenumber, "admin": false, "confirmed": true, "role": "user" })
         });
         return res;
     }
