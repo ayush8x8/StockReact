@@ -3,12 +3,14 @@ import ManageCompany from './ManageCompany';
 import ManageExchange from './ManageExchange';
 import ManageIpo from './ManageIpo';
 import SheetJSApp from './SheetJSApp';
+import { useHistory } from 'react-router-dom';
 // import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
-import { Container, Nav } from 'react-bootstrap';
+import { Button, Container, Nav } from 'react-bootstrap';
 
 function AdminDashboard() {
 
     const [comp, setComp] = useState('');
+    const history = useHistory();
 
     return (
         <Container>
@@ -26,7 +28,10 @@ function AdminDashboard() {
 
                 <Nav.Item><Nav.Link onClick={function () { setComp('ManageIpo') }} eventKey="i">Update IPO details</Nav.Link></Nav.Item>
 
-                {/* <button>Logout</button> */}
+                <Button variant="outline-info" onClick={() => {
+                    window.sessionStorage.clear();
+                    history.push("/login");
+                }}>Logout</Button>
             </Nav>
             <div>
                 {comp === 'ManageCompany' && (

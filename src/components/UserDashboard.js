@@ -8,11 +8,13 @@ import ComparisonCharts from './ComparisonCharts';
 import { Link, BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 import { Button, Container, Nav } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+
 
 function UserDashboard() {
 
     const [comp, setComp] = useState('');
-    // const history = useHistory();
+    const history = useHistory();
 
     return (
         <Container>
@@ -31,6 +33,10 @@ function UserDashboard() {
 
                 <Nav.Item><Nav.Link onClick={function () { setComp('ViewIpo') }} eventKey="e">View IPO Info</Nav.Link></Nav.Item>
 
+                <Button variant="outline-info" onClick={() => {
+                    window.sessionStorage.clear();
+                    history.push("/login");
+                }}>Logout</Button>
 
             </Nav>
             {/* <BrowserRouter>
