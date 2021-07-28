@@ -114,7 +114,7 @@ class CompanyComparisonChart3 extends Component {
                 var prevDs = Object.assign({}, this.state.dataSource);
                 response.forEach((value, key) => {
                     prevDs.categories[0].category[key] = {
-                        'label': 'Ayush',
+                        'label': '',
                     };
                 })
                 let arr = [];
