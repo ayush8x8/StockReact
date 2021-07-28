@@ -1,6 +1,6 @@
 # Few steps on how to run the solution
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and deployed on heroku.
 
 ## Available Scripts
 
